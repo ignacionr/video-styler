@@ -1,19 +1,31 @@
 {
     "configurations": [
         {
-            "name": "Video Styler C++23",
+            "name": "Video Styler C++23 (Nix)",
             "includePath": [
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/src/**",
-                "/nix/store/*/include/**"
+                "/nix/store/*/include/**",
+                "/nix/store/*/include/opencv4/**",
+                "/nix/store/*/include/eigen3/**",
+                "/nix/store/*/include/boost/**"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/clang++",
+            "defines": [
+                "OPENCV_LATEST_FEATURES",
+                "__cplusplus=202302L"
+            ],
+            "compilerPath": "/nix/store/*/bin/clang++",
             "cStandard": "c17",
             "cppStandard": "c++23",
-            "intelliSenseMode": "macos-clang-arm64",
+            "intelliSenseMode": "clang-x64",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerArgs": [
+                "-std=c++23",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic"
+            ]
         }
     ],
     "version": 4
