@@ -4,8 +4,11 @@
         {
             "label": "Configure CMake (Ninja)",
             "type": "shell",
-            "command": "cmake",
+            "command": "nix",
             "args": [
+                "develop",
+                "--command",
+                "cmake",
                 "-B",
                 "${workspaceFolder}/build",
                 "-S",
@@ -25,13 +28,16 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "detail": "Configure with Ninja generator and C++23"
+            "detail": "Configure with Ninja generator and C++23 in Nix environment"
         },
         {
             "label": "Build Debug (Ninja)",
             "type": "shell",
-            "command": "ninja",
+            "command": "nix",
             "args": [
+                "develop",
+                "--command",
+                "ninja",
                 "-C",
                 "${workspaceFolder}/build"
             ],
@@ -49,7 +55,7 @@
                 "$gcc"
             ],
             "dependsOn": "Configure CMake (Ninja)",
-            "detail": "Build using Ninja (fast parallel builds)"
+            "detail": "Build using Ninja in Nix environment (fast parallel builds)"
         },
         {
             "label": "Build Release (Ninja)",
@@ -78,11 +84,13 @@
         {
             "label": "Run Tests",
             "type": "shell",
-            "command": "ctest",
+            "command": "nix",
             "args": [
-                "--test-dir",
-                "${workspaceFolder}/build",
-                "--verbose"
+                "develop",
+                "--command",
+                "bash",
+                "-c",
+                "cd build && ./tests/video_styler_tests"
             ],
             "group": "test",
             "dependsOn": "Build Debug (Ninja)",
@@ -91,7 +99,34 @@
                 "reveal": "always",
                 "focus": false,
                 "panel": "shared"
-            }
+            },
+            "detail": "Run unit tests in Nix environment"
+        },
+        {
+            "label": "Build and Test",
+            "type": "shell",
+            "command": "nix",
+            "args": [
+                "develop",
+                "--command",
+                "bash",
+                "-c",
+                "mkdir -p build && cd build && cmake -GNinja .. && ninja && ./tests/video_styler_tests"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Full build and test cycle in Nix environment"
         },
         {
             "label": "Clean Build",
@@ -107,7 +142,8 @@
                 "reveal": "always",
                 "focus": false,
                 "panel": "shared"
-            }
+            },
+            "detail": "Clean build directory"
         },
         {
             "label": "Enter Nix Shell",

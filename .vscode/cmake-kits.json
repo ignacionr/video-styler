@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Nix Clang 16 - C++23",
+        "environmentSetupScript": "${workspaceFolder}/.vscode/nix-cmake.sh",
+        "preferredGenerator": {
+            "name": "Ninja"
+        },
+        "cmakeSettings": {
+            "CMAKE_BUILD_TYPE": "Debug",
+            "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+            "CMAKE_CXX_STANDARD": "23"
+        }
+    }
+]

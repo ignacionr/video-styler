@@ -5,19 +5,17 @@
     "cmake.configureOnOpen": false,
     "cmake.buildBeforeRun": true,
     "cmake.clearOutputBeforeBuild": true,
-    "cmake.configureEnvironment": {
-        "PATH": "/nix/store/xh1ghr3zaif0dh0nhd5hifcb8shwfsi7-cmake-3.29.2/bin:/nix/store/ykbj4vy7p4gzhfm59say7q4pmddv8ja7-clang-wrapper-16.0.6/bin:/nix/store/0q3i14n1x1ysqfwiwj77n0afh4nqhp4j-ninja-1.11.1/bin:${env:PATH}",
-        "CMAKE_PREFIX_PATH": "/nix/store/iha2m7gabhi6g6fr5aqdylm40kqr0li0-opencv-4.9.0:/nix/store/w9pq234alppj8pv0xvz9sjqy9yafafbh-boost-1.82.0-dev:/nix/store/csz39fgijm1vridb1sx31prk0i7a6sqw-eigen-3.4.0:/nix/store/ci80plbwz1ifxzqr7zwx4394z1q42y1n-gtest-1.14.0-dev",
-        "PKG_CONFIG_PATH": "/nix/store/iha2m7gabhi6g6fr5aqdylm40kqr0li0-opencv-4.9.0/lib/pkgconfig:/nix/store/w9pq234alppj8pv0xvz9sjqy9yafafbh-boost-1.82.0-dev/lib/pkgconfig"
-    },
-    "cmake.cmakePath": "/nix/store/xh1ghr3zaif0dh0nhd5hifcb8shwfsi7-cmake-3.29.2/bin/cmake",
-    "cmake.preferredGenerators": [
-        "Ninja"
+    "cmake.configureArgs": [
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_CXX_STANDARD=23"
     ],
+    "cmake.buildArgs": [],
+    "cmake.parallelJobs": 0,
+    "cmake.useTasks": true,
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.default.cppStandard": "c++23",
     "C_Cpp.default.cStandard": "c17",
-    "C_Cpp.default.compilerPath": "/nix/store/ykbj4vy7p4gzhfm59say7q4pmddv8ja7-clang-wrapper-16.0.6/bin/clang++",
     "files.associations": {
         "*.hpp": "cpp",
         "*.cpp": "cpp",
@@ -28,5 +26,15 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "nix.enableLanguageServer": true,
-    "nix.serverPath": "nil"
+    "nix.serverPath": "nil",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.profiles.osx": {
+        "nix-shell": {
+            "path": "nix",
+            "args": [
+                "develop"
+            ],
+            "icon": "terminal"
+        }
+    }
 }
