@@ -1,0 +1,150 @@
+digraph VideoStylerArchitecture {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Arial";
+    fontsize=14;
+    
+    // Node styles
+    node [fontname="Arial", fontsize=12, shape=box, style=filled];
+    
+    // Define color scheme
+    subgraph cluster_app {
+        label="Video Styler Application";
+        style=filled;
+        fillcolor="#f0f8ff";
+        fontsize=16;
+        fontweight=bold;
+        
+        // Main application
+        main [label="main.cpp\n(Entry Point)", fillcolor="#87ceeb", shape=ellipse];
+    }
+    
+    subgraph cluster_video {
+        label="Video Processing Module";
+        style=filled;
+        fillcolor="#f0fff0";
+        fontsize=14;
+        fontweight=bold;
+        
+        VideoLoader [label="VideoLoader\nclass", fillcolor="#90ee90"];
+        video_methods [label="• loadVideo()\n• getFrameCount()\n• getFPS()\n• getCapture()", 
+                      fillcolor="#98fb98", shape=record];
+    }
+    
+    subgraph cluster_style {
+        label="Neural Style Transfer Module";
+        style=filled;
+        fillcolor="#fff5ee";
+        fontsize=14;
+        fontweight=bold;
+        
+        NeuralStyleTransfer [label="NeuralStyleTransfer\nclass", fillcolor="#ffa07a"];
+        style_methods [label="• loadStyleImage()\n• applyStyleTransfer()\n• setParameters()", 
+                      fillcolor="#ffb07a", shape=record];
+    }
+    
+    subgraph cluster_utils {
+        label="Utilities Module";
+        style=filled;
+        fillcolor="#f5f5f5";
+        fontsize=14;
+        fontweight=bold;
+        
+        Logger [label="Logger\nclass", fillcolor="#dcdcdc"];
+        logger_methods [label="• info()\n• warning()\n• error()\n• debug()", 
+                       fillcolor="#e6e6e6", shape=record];
+    }
+    
+    subgraph cluster_external {
+        label="External Dependencies";
+        style=filled;
+        fillcolor="#fff0f5";
+        fontsize=14;
+        fontweight=bold;
+        
+        OpenCV [label="OpenCV 4.9\n• Video I/O\n• DNN Module\n• Image Processing", 
+                fillcolor="#ffb6c1"];
+        Eigen [label="Eigen 3.4+\n• Matrix Operations\n• Linear Algebra", 
+               fillcolor="#ffb6c1"];
+        Boost [label="Boost 1.82\n• Filesystem\n• Program Options", 
+               fillcolor="#ffb6c1"];
+    }
+    
+    subgraph cluster_testing {
+        label="Testing Framework";
+        style=filled;
+        fillcolor="#f0f0ff";
+        fontsize=14;
+        fontweight=bold;
+        
+        GoogleTest [label="Google Test\n• Unit Tests\n• CTest Integration", 
+                   fillcolor="#e6e6fa"];
+        TestSuite [label="15 Test Cases\n• VideoLoader Tests\n• Style Transfer Tests\n• Logger Tests", 
+                  fillcolor="#e6e6fa"];
+    }
+    
+    subgraph cluster_build {
+        label="Build System";
+        style=filled;
+        fillcolor="#fffacd";
+        fontsize=14;
+        fontweight=bold;
+        
+        CMake [label="CMake 3.29\n• C++23 Support\n• Ninja Generator", 
+               fillcolor="#f0e68c"];
+        Nix [label="Nix Environment\n• Reproducible Builds\n• Dependency Management", 
+             fillcolor="#f0e68c"];
+    }
+    
+    // Data flow arrows
+    main -> VideoLoader [label="loads", color="#4169e1"];
+    main -> NeuralStyleTransfer [label="processes", color="#4169e1"];
+    main -> Logger [label="logs", color="#4169e1"];
+    
+    VideoLoader -> video_methods [style=dashed, color="#228b22"];
+    NeuralStyleTransfer -> style_methods [style=dashed, color="#ff6347"];
+    Logger -> logger_methods [style=dashed, color="#696969"];
+    
+    // External dependencies
+    VideoLoader -> OpenCV [label="uses", color="#8b0000"];
+    NeuralStyleTransfer -> OpenCV [label="DNN", color="#8b0000"];
+    NeuralStyleTransfer -> Eigen [label="math", color="#8b0000"];
+    main -> Boost [label="CLI args", color="#8b0000"];
+    
+    // Testing connections
+    GoogleTest -> TestSuite [style=dashed, color="#4b0082"];
+    TestSuite -> VideoLoader [label="tests", color="#4b0082", style=dotted];
+    TestSuite -> NeuralStyleTransfer [label="tests", color="#4b0082", style=dotted];
+    TestSuite -> Logger [label="tests", color="#4b0082", style=dotted];
+    
+    // Build system connections
+    CMake -> main [label="builds", color="#daa520", style=dashed];
+    Nix -> CMake [label="provides", color="#daa520", style=dashed];
+    Nix -> OpenCV [label="manages", color="#daa520", style=dashed];
+    Nix -> Eigen [label="manages", color="#daa520", style=dashed];
+    Nix -> Boost [label="manages", color="#daa520", style=dashed];
+    
+    // Processing flow
+    video_input [label="Input Video\n(.mp4, .avi, .mov)", shape=folder, fillcolor="#ffffcc"];
+    style_input [label="Style Image\n(.jpg, .png)", shape=folder, fillcolor="#ffffcc"];
+    output_video [label="Stylized Video\n(frame-by-frame)", shape=folder, fillcolor="#ccffcc"];
+    
+    video_input -> VideoLoader [color="#ff4500"];
+    style_input -> NeuralStyleTransfer [color="#ff4500"];
+    NeuralStyleTransfer -> output_video [color="#32cd32"];
+    
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor="#ffffff";
+        fontsize=12;
+        
+        legend_flow [label="Data Flow", color="#4169e1", shape=plaintext];
+        legend_uses [label="Uses/Depends", color="#8b0000", shape=plaintext];
+        legend_tests [label="Testing", color="#4b0082", shape=plaintext];
+        legend_build [label="Build System", color="#daa520", shape=plaintext];
+        legend_io [label="Input/Output", color="#ff4500", shape=plaintext];
+    }
+}

@@ -23,6 +23,7 @@
             boost182
             gtest
             lldb
+            graphviz
           ];
 
           shellHook = ''

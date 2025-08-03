@@ -78,6 +78,10 @@ The project includes comprehensive VS Code integration:
 
 ## Architecture
 
+![Video Styler Architecture](docs/architecture.png)
+
+*Complete system architecture showing modules, dependencies, data flow, and build system integration*
+
 ### Core Components
 
 1. **Video Processor** (`src/video_processor/`)
@@ -125,6 +129,9 @@ video-styler/
 │   ├── style_transfer/    # Style transfer headers
 │   └── utils/             # Utility headers
 ├── tests/                 # Unit tests (Google Test)
+├── docs/                  # Architecture diagrams and documentation
+│   ├── architecture.dot   # DOT source for architecture diagram
+│   └── architecture.png   # Architecture diagram (generated)
 ├── examples/              # Example videos, styles, and outputs
 │   ├── input_videos/      # Sample input videos for testing
 │   ├── style_images/      # Sample style images for transfer
