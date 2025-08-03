@@ -17,7 +17,7 @@ add_executable(video_styler_tests ${TEST_SOURCES})
 target_link_libraries(video_styler_tests
     GTest::gtest
     GTest::gtest_main
-    ${OPENCV4_LIBRARIES}
+    ${OpenCV_LIBS}
     Eigen3::Eigen
     Boost::system
     Boost::filesystem
@@ -32,7 +32,7 @@ target_include_directories(video_styler_tests PRIVATE
 
 # Add compile definitions for tests
 target_compile_definitions(video_styler_tests PRIVATE
-    ${OPENCV4_CFLAGS_OTHER}
+    ${OpenCV_COMPILE_DEFINITIONS}
 )
 
 # Add object library for source files (excluding main.cpp)
@@ -46,8 +46,16 @@ target_include_directories(video_styler_lib PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
+target_link_libraries(video_styler_lib
+    ${OpenCV_LIBS}
+    Eigen3::Eigen
+    Boost::system
+    Boost::filesystem
+    Boost::program_options
+)
+
 target_compile_definitions(video_styler_lib PRIVATE
-    ${OPENCV4_CFLAGS_OTHER}
+    ${OpenCV_COMPILE_DEFINITIONS}
 )
 
 # Link the object library to tests

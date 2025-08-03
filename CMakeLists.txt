@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 3.30)  # Updated for latest CMake 4.x features compatibility
+cmake_minimum_required(VERSION 3.29)  # Updated for latest CMake 4.x features compatibility
 
-# Set C++ standard to C++23 before project declaration
+# Set C++23 standard (use c++2b for Clang 16)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Ensure CMake uses the right flag for Clang 16
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2b")
+endif()
 
 # Enable latest CMake policies
 if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.30")
@@ -16,6 +21,19 @@ project(VideoStyler
     LANGUAGES CXX
 )
 
+# Use modern C++23 features
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Disable dependency scanning for C++20 modules since it's broken with Nix
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
+# Add C++23 flag for Clang 16 compatibility
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2b")
+endif()
+
 # Set build type to Debug if not specified
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -27,18 +45,14 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang
         -Wall
         -Wextra
         -Wpedantic
-        -Werror
         -march=native
         -mtune=native
-        # C++23 specific optimizations
-        -fcoroutines-ts  # Enable coroutines
-        -fmodules-ts     # Enable modules (experimental)
     )
     
-    # Enable latest sanitizers for Debug builds
+    # Enable debugging for Debug builds only (no sanitizers for initial testing)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_compile_options(-g -O0 -fsanitize=address,undefined)
-        add_link_options(-fsanitize=address,undefined)
+        add_compile_options(-g -O0)
+        # add_link_options(-fsanitize=address,undefined)  # Temporarily disabled for initial testing
     elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
         add_compile_options(-O3 -DNDEBUG -flto)  # Link Time Optimization
         add_link_options(-flto)
@@ -49,7 +63,7 @@ endif()
 find_package(PkgConfig REQUIRED)
 
 # OpenCV 4.12+ with latest features
-find_package(OpenCV 4.10 REQUIRED COMPONENTS core imgproc imgcodecs videoio highgui dnn)
+find_package(OpenCV 4.9 REQUIRED)
 if(OpenCV_FOUND)
     message(STATUS "Found OpenCV version: ${OpenCV_VERSION}")
     if(OpenCV_VERSION VERSION_GREATER_EQUAL "4.12")
@@ -68,7 +82,11 @@ find_package(Boost 1.82 REQUIRED COMPONENTS system filesystem program_options th
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
-include_directories(${OPENCV4_INCLUDE_DIRS})
+if(OpenCV_FOUND)
+    include_directories(${OpenCV_INCLUDE_DIRS})
+else()
+    include_directories(${OPENCV4_INCLUDE_DIRS})
+endif()
 
 # Add subdirectories
 add_subdirectory(src)

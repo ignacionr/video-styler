@@ -9,7 +9,7 @@ namespace video_styler::utils
     {
         if (!instance_)
         {
-            instance_ = std::shared_ptr<Logger>(new Logger());
+            instance_ = std::make_shared<Logger>(CreateLogger{});
         }
         return instance_;
     }

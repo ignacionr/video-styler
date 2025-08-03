@@ -6,6 +6,7 @@
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <sstream>
 
 namespace video_styler::utils
 {
@@ -76,9 +77,15 @@ namespace video_styler::utils
         void setLogFile(const std::string &filename = "");
 
     private:
-        Logger() = default;
-        ~Logger() = default;
+        // Helper struct to allow make_shared to access private constructor
+        struct CreateLogger
+        {
+        };
 
+    public:
+        Logger(CreateLogger) : min_level_(LogLevel::INFO) {}
+
+    private:
         static std::shared_ptr<Logger> instance_;
         LogLevel min_level_{LogLevel::INFO};
         std::string log_file_;
