@@ -30,11 +30,9 @@
             
             # Testing
             gtest
-            gmock
             
             # Development tools
             gdb
-            valgrind
             clang-tools
             
             # Documentation
