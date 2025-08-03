@@ -90,7 +90,7 @@
                 "--command",
                 "bash",
                 "-c",
-                "cd build && ./tests/video_styler_tests"
+                "cd build && ctest --verbose"
             ],
             "group": "test",
             "dependsOn": "Build Debug (Ninja)",
@@ -100,7 +100,7 @@
                 "focus": false,
                 "panel": "shared"
             },
-            "detail": "Run unit tests in Nix environment"
+            "detail": "Run unit tests via CTest in Nix environment"
         },
         {
             "label": "Build and Test",

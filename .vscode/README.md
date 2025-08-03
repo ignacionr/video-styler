@@ -1,39 +1,73 @@
-# VS Code CMake Tools with Nix
+# VS Code Integration with Nix Environment
 
-Unfortunately, VS Code's CMake Tools extension has difficulty working directly with Nix environments because it tries to use system tools instead of the Nix-provided ones.
+This document explains how to work with VS Code when using the Nix development environment.
 
-## Recommended Workflow
+## VS Code Test Explorer Setup ✅
 
-### Option 1: Use VS Code Tasks (Recommended)
+The VS Code Test Explorer is now configured to work with our Nix environment! Here's what I've set up:
+
+### Installed Extensions
+- **C++ TestMate** - Provides Google Test integration with VS Code Test Explorer
+
+### Configuration
+- Test executable wrapper: `build/tests/video_styler_tests_nix`
+- This wrapper automatically runs tests in the correct Nix environment
+- Tests will appear in the VS Code Test Explorer panel (beaker icon on the left sidebar)
+
+### How to Use the Test Explorer
+1. **Build the project first** using the VS Code task or terminal
+2. **Open the Test Explorer** by clicking the beaker (🧪) icon in the left sidebar
+3. **Discover tests** - TestMate should automatically find your tests
+4. **Run tests** individually or in groups by clicking the play buttons
+5. **Debug tests** by right-clicking and selecting "Debug Test"
+
+### Test Explorer Features
+- ✅ Individual test execution
+- ✅ Test group execution  
+- ✅ Test results with pass/fail indicators
+- ✅ Test output and logs
+- ✅ Debug support with breakpoints
+- ✅ Test filtering and search
+
+## Alternative Testing Methods
+
+### Option 1: Use VS Code Tasks (Also Available)
 1. Use `Ctrl+Shift+P` (Cmd+Shift+P on Mac) → "Tasks: Run Task"
-2. Select "Configure CMake (Ninja)" to configure the project
-3. Select "Build Debug (Ninja)" to build the project
-4. Select "Run Tests (Ninja)" to run tests
+2. Select from these available tasks:
+   - **"Configure CMake (Ninja)"** - Configure the project
+   - **"Build Debug (Ninja)"** - Build the project
+   - **"Run Tests"** - Run all unit tests 
+   - **"Build and Test"** - Full configure + build + test cycle
 
 ### Option 2: Use Integrated Terminal
-1. Open the integrated terminal in VS Code (`Ctrl+`` `)
-2. The terminal is configured to use the Nix environment automatically
-3. Run the standard build commands:
+1. Open terminal in VS Code (`Ctrl+`` or `Cmd+`` `)
+2. Run standard commands:
    ```bash
+   nix develop
    mkdir -p build && cd build
    cmake -GNinja ..
    ninja
    ./tests/video_styler_tests
    ```
 
-### Option 3: Manual CMake Tools Setup
-If you really want to use CMake Tools extension:
+## Troubleshooting
 
-1. Clean your build directory: `rm -rf build`
-2. Open a terminal in the Nix environment: `nix develop`
-3. In that terminal, start VS Code: `code .`
-4. This will inherit the Nix environment in CMake Tools
+### If tests don't appear in Test Explorer:
+1. Ensure the project is built: Run "Build Debug (Ninja)" task
+2. Check that `build/tests/video_styler_tests_nix` exists and is executable
+3. Refresh the Test Explorer (click the refresh button)
+4. Check the Output panel → "C++ TestMate" for any error messages
 
-## Testing
-The best approach for running tests is to use the VS Code tasks or the terminal:
-```bash
-nix develop --command bash -c "cd build && ./tests/video_styler_tests"
-```
+### If tests fail to run:
+1. Verify the Nix environment is working: `nix develop --command echo "OK"`
+2. Test the wrapper manually: `./build/tests/video_styler_tests_nix --gtest_list_tests`
+3. Ensure all dependencies are available in the Nix environment
+
+### CMake Tools Integration Note
+VS Code's CMake Tools extension may have difficulty with the Nix environment. For best results:
+- Use the VS Code tasks for building
+- Use the Test Explorer for running tests
+- If you need CMake Tools, start VS Code from within `nix develop`
 
 ## IntelliSense
-IntelliSense should work correctly once the project is built, as it will use the generated `compile_commands.json` file.
+IntelliSense works correctly once the project is built, using the generated `compile_commands.json` file.

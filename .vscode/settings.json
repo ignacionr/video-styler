@@ -13,6 +13,8 @@
     "cmake.buildArgs": [],
     "cmake.parallelJobs": 0,
     "cmake.useTasks": true,
+    "cmake.ctest.parallelJobs": 4,
+    "cmake.options.statusBarVisibility": "visible",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.default.cppStandard": "c++23",
     "C_Cpp.default.cStandard": "c17",
