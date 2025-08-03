@@ -19,8 +19,6 @@ target_link_libraries(video_styler_tests
     GTest::gtest_main
     ${OpenCV_LIBS}
     Eigen3::Eigen
-    Boost::system
-    Boost::filesystem
     Boost::program_options
 )
 
@@ -49,8 +47,6 @@ target_include_directories(video_styler_lib PRIVATE
 target_link_libraries(video_styler_lib
     ${OpenCV_LIBS}
     Eigen3::Eigen
-    Boost::system
-    Boost::filesystem
     Boost::program_options
 )
 

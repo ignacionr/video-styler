@@ -67,7 +67,7 @@ digraph VideoStylerArchitecture {
                 fillcolor="#ffb6c1"];
         Eigen [label="Eigen 3.4+\n• Matrix Operations\n• Linear Algebra", 
                fillcolor="#ffb6c1"];
-        Boost [label="Boost 1.82\n• Filesystem\n• Program Options", 
+        Boost [label="Boost 1.82\n• Program Options\n• CLI Argument Parsing", 
                fillcolor="#ffb6c1"];
     }
     

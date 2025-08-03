@@ -78,7 +78,7 @@ if(NOT OpenCV_FOUND)
 endif()
 
 find_package(Eigen3 3.4 REQUIRED)  # Latest Eigen3
-find_package(Boost 1.82 REQUIRED COMPONENTS system filesystem program_options thread)  # Latest Boost
+find_package(Boost 1.82 REQUIRED COMPONENTS program_options)  # Only link what we actually use
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)

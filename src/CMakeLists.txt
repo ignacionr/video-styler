@@ -13,8 +13,6 @@ add_executable(video_styler ${SOURCES})
 target_link_libraries(video_styler
     ${OpenCV_LIBS}
     Eigen3::Eigen
-    Boost::system
-    Boost::filesystem
     Boost::program_options
 )
 

@@ -49,7 +49,7 @@ A modern C++23 application that applies Neural Style Transfer to videos frame-by
 - **CMake**: 3.29.2 (with modern policies and enhanced C++23 support)
 - **LLVM/Clang**: 16.0.6 (full C++23 support with c++2b flag)
 - **OpenCV**: 4.9.0 (enhanced DNN module, improved performance)
-- **Boost**: 1.82 (system, filesystem, program_options, thread)
+- **Boost**: 1.82 (program_options for CLI argument parsing)
 - **Eigen**: 3.4+ (high-performance matrix operations)
 - **Nix**: Stable 24.05 channel for reliable package management
 
